@@ -44,11 +44,19 @@ export default async function ItemDetail({ params }) {
                   />
                 </div>
               </div>
+              {item.url && (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute inset-0 hidden md:block"
+                />
+              )}
               <ImageUpload
                 itemId={item.id}
                 huntId={id}
                 hasImage
-                className="absolute bottom-3 right-3 text-xs text-muted bg-bg/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hover:text-cream"
+                className="absolute bottom-3 right-3 z-10 text-xs text-muted bg-bg/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hover:text-cream"
               >
                 change image
               </ImageUpload>
