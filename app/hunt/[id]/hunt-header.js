@@ -114,7 +114,7 @@ function EditableVibe({ value, onSave, placeholder }) {
         autoFocus
         placeholder={placeholder}
         rows={3}
-        className="w-full bg-surface text-cream px-2 py-1 rounded font-serif italic text-sm focus:outline-none focus:ring-1 focus:ring-stone resize-none mt-1"
+        className="w-full bg-surface text-cream px-2 py-1 rounded font-serif text-sm focus:outline-none focus:ring-1 focus:ring-stone resize-none mt-1"
       />
     );
   }
@@ -127,13 +127,13 @@ function EditableVibe({ value, onSave, placeholder }) {
     >
       {display ? (
         <div
-          className="font-serif italic text-stone text-sm"
+          className="font-serif text-stone text-sm"
           style={{ whiteSpace: "pre-line" }}
         >
           {display}
         </div>
       ) : (
-        <p className="font-serif italic text-muted text-sm">
+        <p className="font-serif text-muted text-sm">
           {placeholder}
         </p>
       )}

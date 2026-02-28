@@ -26,7 +26,7 @@ export default async function Home() {
             <Link href={`/hunt/${vivid.id}`} className="block mb-12">
               <h2 className="font-serif text-xl">{vivid.name}</h2>
               {vivid.vibe && (
-                <p className="font-serif italic text-stone text-sm mt-1 line-clamp-2">
+                <p className="font-serif text-stone text-sm mt-1 line-clamp-2">
                   {vivid.vibe}
                 </p>
               )}

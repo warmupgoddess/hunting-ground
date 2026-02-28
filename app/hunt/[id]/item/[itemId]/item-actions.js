@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -71,6 +71,77 @@ function EditableField({
   );
 }
 
+function EditableNotes({ value, onSave }) {
+  const [editing, setEditing] = useState(false);
+  const [display, setDisplay] = useState(value);
+  const [draft, setDraft] = useState(value);
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    setDisplay(value);
+  }, [value]);
+
+  useEffect(() => {
+    if (editing && textareaRef.current) {
+      const el = textareaRef.current;
+      el.style.height = "auto";
+      el.style.height = el.scrollHeight + "px";
+    }
+  }, [editing, draft]);
+
+  function startEdit() {
+    setDraft(display);
+    setEditing(true);
+  }
+
+  async function commit() {
+    setDisplay(draft);
+    setEditing(false);
+    if (draft !== value) {
+      await onSave(draft);
+    }
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Escape") {
+      setDraft(display);
+      setEditing(false);
+    }
+  }
+
+  if (editing || !display) {
+    return (
+      <textarea
+        ref={textareaRef}
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={commit}
+        onKeyDown={handleKeyDown}
+        autoFocus={editing}
+        onFocus={() => setEditing(true)}
+        placeholder="add notes..."
+        rows={3}
+        className="w-full bg-surface text-cream placeholder:text-muted px-2 py-1 rounded font-serif text-sm focus:outline-none focus:ring-1 focus:ring-stone resize-none"
+      />
+    );
+  }
+
+  return (
+    <div
+      onClick={startEdit}
+      className="cursor-pointer hover:opacity-70 transition-opacity"
+      title="click to edit"
+    >
+      <div
+        className="font-serif text-stone text-sm"
+        style={{ whiteSpace: "pre-line" }}
+      >
+        {display}
+      </div>
+    </div>
+  );
+}
+
 export default function ItemActions({ item, huntId }) {
   const router = useRouter();
   const [status, setStatus] = useState(item.status);
@@ -82,7 +153,6 @@ export default function ItemActions({ item, huntId }) {
   const [url, setUrl] = useState(item.url || "");
   const [notes, setNotes] = useState(item.notes || "");
   const [favorite, setFavorite] = useState(item.is_favorite || false);
-  const [saving, setSaving] = useState(false);
   const [copied, setCopied] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -124,12 +194,6 @@ export default function ItemActions({ item, huntId }) {
     await saveField("status", newStatus);
   }
 
-  async function saveNotes() {
-    if (notes === (item.notes || "")) return;
-    setSaving(true);
-    await saveField("notes", notes);
-    setSaving(false);
-  }
 
   function share() {
     const parts = [title];
@@ -251,15 +315,13 @@ export default function ItemActions({ item, huntId }) {
 
       {/* Notes */}
       <div className="mt-8 pt-8 border-t border-surface">
-        <textarea
+        <EditableNotes
           value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          onBlur={saveNotes}
-          placeholder="add notes..."
-          rows={4}
-          className="w-full bg-surface text-cream placeholder:text-muted px-4 py-3 rounded-lg text-sm italic focus:outline-none focus:ring-1 focus:ring-stone resize-none font-serif"
+          onSave={(v) => {
+            setNotes(v);
+            return saveField("notes", v);
+          }}
         />
-        {saving && <p className="text-xs text-muted mt-1">saving...</p>}
       </div>
 
       {/* Delete */}
