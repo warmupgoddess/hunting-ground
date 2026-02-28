@@ -17,7 +17,6 @@ export default function AddItemModal({ huntId }) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [source, setSource] = useState("");
-  const [scrapedImage, setScrapedImage] = useState(null);
 
   function reset() {
     setMode(null);
@@ -26,7 +25,6 @@ export default function AddItemModal({ huntId }) {
     setTitle("");
     setPrice("");
     setSource("");
-    setScrapedImage(null);
     setScrapeHint(null);
   }
 
@@ -47,9 +45,8 @@ export default function AddItemModal({ huntId }) {
     if (!title && data.title) setTitle(data.title);
     if (!price && data.price != null) setPrice(String(data.price));
     if (!source && data.source) setSource(data.source);
-    if (data.image) setScrapedImage(data.image);
 
-    if (!data.title && !data.price && !data.image) {
+    if (!data.title && !data.price) {
       setScrapeHint("couldn\u2019t read this site \u2014 fill in manually");
     }
   }
@@ -63,7 +60,7 @@ export default function AddItemModal({ huntId }) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    let imageUrl = scrapedImage || null;
+    let imageUrl = null;
 
     if (mode === "photo" && file) {
       const ext = file.name.split(".").pop();

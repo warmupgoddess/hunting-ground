@@ -4,6 +4,7 @@ import Link from "next/link";
 import ItemImage from "@/components/item-image";
 import AddItemModal from "./add-item-modal";
 import HuntHeader from "./hunt-header";
+import ItemCardImage from "./item-card-image";
 
 export default async function HuntDetail({ params }) {
   const { id } = await params;
@@ -55,9 +56,7 @@ export default async function HuntDetail({ params }) {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-muted text-xs">
-                    no image
-                  </div>
+                  <ItemCardImage itemId={item.id} huntId={id} />
                 )}
                 {item.is_favorite && (
                   <span className="absolute top-2 right-2 text-sm opacity-70">
@@ -111,9 +110,7 @@ export default async function HuntDetail({ params }) {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted text-xs">
-                      no image
-                    </div>
+                    <ItemCardImage itemId={item.id} huntId={id} />
                   )}
                 </div>
                 <p className="text-sm truncate mt-2 line-through">
