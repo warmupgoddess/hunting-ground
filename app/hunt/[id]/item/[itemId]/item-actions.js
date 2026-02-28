@@ -197,7 +197,7 @@ export default function ItemActions({ item, huntId }) {
 
   function share() {
     const parts = [title];
-    if (price) parts.push(`$${Number(price).toFixed(0)}`);
+    if (price) parts.push(`$${Number(price) % 1 ? Number(price).toFixed(2) : Number(price)}`);
     if (source) parts.push(`from ${source}`);
     if (url) parts.push(url);
 
@@ -232,7 +232,7 @@ export default function ItemActions({ item, huntId }) {
           }}
           displayValue={
             <span className="font-mono text-sm text-stone">
-              {price ? `$${Number(price).toFixed(0)}` : "add price"}
+              {price ? `$${Number(price) % 1 ? Number(price).toFixed(2) : Number(price)}` : "add price"}
             </span>
           }
           inputType="number"
@@ -307,7 +307,7 @@ export default function ItemActions({ item, huntId }) {
           <div>
             <span className="font-mono text-xs text-muted">offer: </span>
             <span className="font-mono text-sm text-stone">
-              ${Number(item.offer_amount).toFixed(0)}
+              ${Number(item.offer_amount) % 1 ? Number(item.offer_amount).toFixed(2) : Number(item.offer_amount)}
             </span>
           </div>
         )}

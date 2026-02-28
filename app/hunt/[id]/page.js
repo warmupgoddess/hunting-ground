@@ -72,7 +72,7 @@ export default async function HuntDetail({ params }) {
                 </div>
                 {item.price != null && (
                   <p className="font-mono text-xs text-muted mt-0.5">
-                    ${Number(item.price).toFixed(0)}
+                    ${Number(item.price) % 1 ? Number(item.price).toFixed(2) : Number(item.price)}
                   </p>
                 )}
                 {item.source && (
