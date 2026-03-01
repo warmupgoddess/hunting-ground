@@ -8,7 +8,7 @@
   --color-surface: #1a1918;
   --color-surface-hover: #222120;
   --color-border: #2a2926;
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
   --font-mono: var(--font-dm-mono);
   --font-serif: "New York", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 }
@@ -25,6 +25,22 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.brand-title {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.12em !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 196, 196, 0.15) 0%,
+    rgba(255, 196, 196, 0.35) 45%,
+    rgba(255, 196, 196, 0.18) 100%
+  ) !important;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 /* Prevent iOS Safari zoom on input focus */

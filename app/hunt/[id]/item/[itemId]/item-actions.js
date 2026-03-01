@@ -121,7 +121,7 @@ function EditableNotes({ value, onSave }) {
         onFocus={() => setEditing(true)}
         placeholder="add notes..."
         rows={3}
-        className="w-full bg-surface text-cream placeholder:text-muted px-2 py-1 rounded font-serif text-sm focus:outline-none focus:ring-1 focus:ring-stone resize-none"
+        className="w-full bg-surface text-cream placeholder:text-muted px-2 py-1 rounded text-sm focus:outline-none focus:ring-1 focus:ring-stone resize-none"
       />
     );
   }
@@ -133,7 +133,7 @@ function EditableNotes({ value, onSave }) {
       title="click to edit"
     >
       <div
-        className="font-serif text-stone text-sm"
+        className="text-stone text-sm"
         style={{ whiteSpace: "pre-line" }}
       >
         {display}
@@ -216,10 +216,10 @@ export default function ItemActions({ item, huntId }) {
           return saveField("title", v);
         }}
         displayValue={
-          <h1 className="font-serif text-xl">{title || "untitled"}</h1>
+          <h1 className="text-xl">{title || "untitled"}</h1>
         }
         placeholder="title"
-        inputClassName="w-full font-serif text-xl"
+        inputClassName="w-full text-xl"
       />
 
       {/* Price · Source */}

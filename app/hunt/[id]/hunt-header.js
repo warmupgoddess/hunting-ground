@@ -114,7 +114,7 @@ function EditableVibe({ value, onSave, placeholder }) {
         autoFocus
         placeholder={placeholder}
         rows={3}
-        className="w-full bg-surface text-cream px-2 py-1 rounded font-serif text-sm focus:outline-none focus:ring-1 focus:ring-stone resize-none mt-1"
+        className="w-full bg-surface text-cream px-2 py-1 rounded text-sm focus:outline-none focus:ring-1 focus:ring-stone resize-none mt-1"
       />
     );
   }
@@ -127,13 +127,13 @@ function EditableVibe({ value, onSave, placeholder }) {
     >
       {display ? (
         <div
-          className="font-serif text-stone text-sm"
+          className="text-stone text-sm"
           style={{ whiteSpace: "pre-line" }}
         >
           {display}
         </div>
       ) : (
-        <p className="font-serif text-muted text-sm">
+        <p className="text-muted text-sm">
           {placeholder}
         </p>
       )}
@@ -163,9 +163,9 @@ export default function HuntHeader({ hunt }) {
           setName(v);
           return saveField("name", v);
         }}
-        displayValue={<h1 className="font-serif text-2xl">{name}</h1>}
+        displayValue={<h1 className="text-2xl">{name}</h1>}
         placeholder="hunt name"
-        inputClassName="font-serif text-2xl w-full"
+        inputClassName="text-2xl w-full"
       />
       <EditableVibe
         value={vibe}

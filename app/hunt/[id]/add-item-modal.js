@@ -129,7 +129,7 @@ export default function AddItemModal({ huntId }) {
     <div className="fixed inset-0 bg-bg/90 z-50 flex items-end justify-center">
       <div className="w-full max-w-2xl bg-surface rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
-          <h3 className="font-serif text-lg">
+          <h3 className="text-lg font-bold">
             {mode === "link" ? "paste a link" : "add a photo"}
           </h3>
           <button

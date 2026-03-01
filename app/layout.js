@@ -8,7 +8,7 @@ const dmMono = DM_Mono({
 });
 
 export const metadata = {
-  title: "hunting ground",
+  title: "hunting groundz₹",
   description: "a personal shopping tool",
   viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
 };

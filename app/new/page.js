@@ -43,7 +43,7 @@ export default function NewHunt() {
         &larr; back
       </button>
 
-      <h1 className="font-serif text-2xl mb-8">new hunt</h1>
+      <h1 className="text-2xl font-bold mb-8">new hunt</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <div>

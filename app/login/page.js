@@ -52,7 +52,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
-        <h1 className="font-serif text-3xl mb-2">hunting ground</h1>
+        <h1 className="brand-title text-4xl mb-2">hunting groundz₹</h1>
         <p className="text-stone text-sm mb-10">sign in to continue</p>
 
         {sent ? (
