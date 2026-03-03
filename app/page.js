@@ -22,7 +22,8 @@ export default async function Home() {
   const { data: hunts } = await supabase
     .from("hunts")
     .select("*, items(id, image_url, status, is_favorite)")
-    .order("updated_at", { ascending: false });
+    .order("updated_at", { ascending: false })
+    .order("created_at", { referencedTable: "items", ascending: false });
 
   const featured = hunts?.[0];
   const rest = hunts?.slice(1) || [];
