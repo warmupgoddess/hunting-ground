@@ -19,11 +19,8 @@ export default async function ItemDetail({ params }) {
 
   return (
     <div className="min-h-screen pb-24 px-6 py-4 max-w-3xl mx-auto">
-      <Link
-        href={`/hunt/${id}`}
-        className="text-muted text-sm hover:text-stone transition-colors"
-      >
-        &larr; back
+      <Link href={`/hunt/${id}`} className="block text-center text-2xl tracking-widest" style={{ color: 'rgba(255,196,196,0.35)', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontWeight: 900 }}>
+        ₹
       </Link>
 
       <div className="mt-6 flex flex-col md:flex-row md:gap-10">

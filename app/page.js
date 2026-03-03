@@ -30,15 +30,15 @@ export default async function Home() {
   const remaining = rest.length - LIST_LIMIT;
 
   return (
-    <div className="min-h-screen px-6 pt-16 pb-12 max-w-2xl mx-auto">
-      <div style={{ paddingTop: '1rem', paddingBottom: '4rem' }}>
+    <div className="min-h-screen px-6 pt-8 pb-12 max-w-2xl mx-auto">
+      <div style={{ paddingBottom: '4rem' }}>
         <h1
           className="text-center"
           style={{
             fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
             fontWeight: 900,
             letterSpacing: '0.12em',
-            fontSize: '2.5rem',
+            fontSize: 'clamp(1.6rem, 5.5vw, 2.5rem)',
             lineHeight: 1.1,
             color: 'transparent',
             WebkitTextFillColor: 'transparent',
@@ -79,7 +79,7 @@ export default async function Home() {
                     .map((item) => (
                       <div
                         key={item.id}
-                        className="w-[150px] h-[150px] flex-shrink-0 rounded-lg overflow-hidden bg-surface"
+                        className="w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] flex-shrink-0 rounded-lg overflow-hidden bg-surface"
                       >
                         <ItemImage
                           src={item.image_url}
@@ -110,7 +110,7 @@ export default async function Home() {
                 <Link
                   key={hunt.id}
                   href={`/hunt/${hunt.id}`}
-                  className="flex items-center justify-between py-4 group"
+                  className="flex items-center justify-between py-2 group"
                 >
                   <div className="flex items-baseline gap-3">
                     <span className="text-base tracking-widest lowercase group-hover:text-cream transition-colors">

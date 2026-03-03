@@ -28,12 +28,9 @@ export default async function HuntDetail({ params }) {
   const soldOutItems = items?.filter((i) => i.status === "sold_out") || [];
 
   return (
-    <div className="min-h-screen px-6 py-12 max-w-2xl mx-auto pb-28">
-      <Link
-        href="/"
-        className="text-muted text-sm mb-10 block hover:text-stone transition-colors"
-      >
-        &larr; hunts
+    <div className="min-h-screen px-6 py-4 max-w-2xl mx-auto pb-28">
+      <Link href="/" className="block text-center mb-6 text-2xl tracking-widest" style={{ color: 'rgba(255,196,196,0.35)', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontWeight: 900 }}>
+        ₹
       </Link>
 
       <HuntHeader hunt={hunt} />
