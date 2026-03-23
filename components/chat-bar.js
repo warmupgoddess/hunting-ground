@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { scrapeUrl } from "@/app/hunt/[id]/actions";
@@ -30,6 +30,24 @@ export default function ChatBar({
   const [localNotes, setLocalNotes] = useState(item?.notes || "");
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const fileRef = useRef(null);
+  const barRef = useRef(null);
+
+  const handleViewportResize = useCallback(() => {
+    if (!barRef.current || !window.visualViewport) return;
+    const offset = window.innerHeight - window.visualViewport.height;
+    barRef.current.style.transform = offset > 0 ? `translateY(-${offset}px)` : '';
+  }, []);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    vv.addEventListener('resize', handleViewportResize);
+    vv.addEventListener('scroll', handleViewportResize);
+    return () => {
+      vv.removeEventListener('resize', handleViewportResize);
+      vv.removeEventListener('scroll', handleViewportResize);
+    };
+  }, [handleViewportResize]);
 
   const placeholders = {
     home: "letz hunt, mrin",
@@ -38,7 +56,9 @@ export default function ChatBar({
       : isEmpty
         ? "letz hunt, mrin"
         : "what's next?",
-    item: "anything 2 add?",
+    item: confirmingDelete
+      ? "delete this item? type yes to confirm"
+      : "anything 2 add?",
   };
 
   async function getUser() {
@@ -55,14 +75,19 @@ export default function ChatBar({
     if (!text || loading) return;
     setLoading(true);
 
-    // Hunt delete flow: two-step confirmation
-    if (context === "hunt" && confirmingDelete) {
+    // Delete flow: two-step confirmation (hunt or item)
+    if ((context === "hunt" || context === "item") && confirmingDelete) {
       if (text.toLowerCase() === "yes") {
         try {
           const { supabase } = await getUser();
-          await supabase.from("items").delete().eq("hunt_id", huntId);
-          await supabase.from("hunts").delete().eq("id", huntId);
-          router.push("/");
+          if (context === "hunt") {
+            await supabase.from("items").delete().eq("hunt_id", huntId);
+            await supabase.from("hunts").delete().eq("id", huntId);
+            router.push("/");
+          } else {
+            await supabase.from("items").delete().eq("id", itemId);
+            router.push(`/hunt/${huntId}`);
+          }
         } catch (err) {
           console.error(err);
         }
@@ -73,7 +98,7 @@ export default function ChatBar({
       return;
     }
 
-    if (context === "hunt" && text.toLowerCase() === "delete") {
+    if ((context === "hunt" || context === "item") && text.toLowerCase() === "delete") {
       setConfirmingDelete(true);
       setValue("");
       setLoading(false);
@@ -296,6 +321,7 @@ export default function ChatBar({
 
   return (
     <div
+      ref={barRef}
       className="fixed bottom-0 left-0 right-0 z-50"
       style={{
         paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
@@ -308,11 +334,10 @@ export default function ChatBar({
           <div
             style={{
               position: 'absolute',
-              top: '-20px',
+              top: '-12px',
               left: '8%',
-              width: '5.5vw',
-              maxWidth: '36px',
-              aspectRatio: '1/2',
+              width: 'clamp(28px, 7vw, 36px)',
+              height: 'clamp(28px, 7vw, 36px)',
               background: '#2A2A2A',
               transform: 'rotate(45deg)',
               borderRadius: '8px 8px 0 8px',
@@ -321,11 +346,10 @@ export default function ChatBar({
           <div
             style={{
               position: 'absolute',
-              top: '-20px',
+              top: '-12px',
               right: '8%',
-              width: '5.5vw',
-              maxWidth: '36px',
-              aspectRatio: '1/2',
+              width: 'clamp(28px, 7vw, 36px)',
+              height: 'clamp(28px, 7vw, 36px)',
               background: '#2A2A2A',
               transform: 'rotate(45deg)',
               borderRadius: '8px 8px 8px 0',
@@ -335,6 +359,9 @@ export default function ChatBar({
             type="text"
             value={value}
             onChange={(e) => setValue(e.target.value)}
+            onBlur={() => {
+              if (barRef.current) barRef.current.style.transform = '';
+            }}
             placeholder={placeholders[context]}
             disabled={loading}
             className="w-full pl-4 pr-12 py-3 rounded-full text-center text-cream placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-white/10 disabled:opacity-50"
@@ -353,8 +380,8 @@ export default function ChatBar({
             type="button"
             onClick={() => fileRef.current?.click()}
             disabled={loading}
-            className="absolute right-3 flex items-center justify-center text-muted hover:text-cream transition-colors disabled:opacity-50"
-            style={{ fontSize: '18px', lineHeight: 1, zIndex: 2 }}
+            className="absolute flex items-center justify-center text-muted hover:text-cream transition-colors disabled:opacity-50"
+            style={{ fontSize: '18px', lineHeight: 1, zIndex: 2, right: 'calc(8% + 4px)' }}
           >
             &#9829;
           </button>

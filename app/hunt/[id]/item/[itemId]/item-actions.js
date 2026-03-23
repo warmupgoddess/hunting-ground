@@ -14,7 +14,6 @@ export default function ItemActions({ item, huntId }) {
   const [url, setUrl] = useState(item.url || "");
   const [notes, setNotes] = useState(item.notes || "");
   const [favorite, setFavorite] = useState(item.is_favorite || false);
-  const [deleting, setDeleting] = useState(false);
 
   // Title editing
   const [editingTitle, setEditingTitle] = useState(false);
@@ -24,9 +23,14 @@ export default function ItemActions({ item, huntId }) {
   const [editingPrice, setEditingPrice] = useState(false);
   const [priceDraft, setPriceDraft] = useState(price);
 
+  // Notes editing
+  const [editingNotes, setEditingNotes] = useState(false);
+  const [notesDraft, setNotesDraft] = useState(notes);
+
   useEffect(() => {
     function onNotesUpdated(e) {
       setNotes(e.detail.notes);
+      setNotesDraft(e.detail.notes);
     }
     window.addEventListener("notes-updated", onNotesUpdated);
     return () => window.removeEventListener("notes-updated", onNotesUpdated);
@@ -86,8 +90,8 @@ export default function ItemActions({ item, huntId }) {
           }}
           autoFocus
           placeholder="title"
-          className="bg-surface text-cream px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-stone w-full"
-          style={{ fontSize: '24px', fontWeight: 500 }}
+          className="bg-surface text-cream px-2 py-1 rounded focus:outline-none w-full"
+          style={{ fontSize: '24px', fontWeight: 500, boxShadow: '0 0 0 0.5px rgba(255,255,255,0.08)' }}
         />
       ) : (
         <h1
@@ -121,7 +125,8 @@ export default function ItemActions({ item, huntId }) {
               }}
               autoFocus
               placeholder="price"
-              className="bg-surface text-cream px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-stone w-20"
+              className="bg-surface text-cream px-2 py-1 rounded focus:outline-none w-20"
+              style={{ boxShadow: '0 0 0 0.5px rgba(255,255,255,0.08)' }}
             />
           ) : (
             <span
@@ -174,49 +179,42 @@ export default function ItemActions({ item, huntId }) {
         </button>
       </div>
 
-      {/* Notes — only shown if they exist */}
-      {notes && (
+      {/* Notes — only shown if they exist, click to edit */}
+      {(notes || editingNotes) && (
         <div className="mt-6">
-          <div
-            className="text-stone"
-            style={{ whiteSpace: "pre-line" }}
-          >
-            {notes}
-          </div>
+          {editingNotes ? (
+            <textarea
+              value={notesDraft}
+              onChange={(e) => setNotesDraft(e.target.value)}
+              onBlur={() => {
+                setEditingNotes(false);
+                if (notesDraft !== notes) {
+                  setNotes(notesDraft);
+                  saveField("notes", notesDraft);
+                  window.dispatchEvent(
+                    new CustomEvent("notes-updated", { detail: { notes: notesDraft } })
+                  );
+                }
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") { setNotesDraft(notes); setEditingNotes(false); }
+              }}
+              autoFocus
+              rows={3}
+              className="w-full bg-surface text-stone px-2 py-1 rounded focus:outline-none resize-none"
+              style={{ whiteSpace: "pre-line", boxShadow: '0 0 0 0.5px rgba(255,255,255,0.08)' }}
+            />
+          ) : (
+            <div
+              onClick={() => { setNotesDraft(notes); setEditingNotes(true); }}
+              className="text-stone cursor-pointer hover:opacity-70 transition-opacity"
+              style={{ whiteSpace: "pre-line" }}
+            >
+              {notes}
+            </div>
+          )}
         </div>
       )}
-
-      {/* Delete */}
-      <div className="mt-12 flex justify-end">
-        {deleting ? (
-          <div className="flex items-center gap-4">
-            <span className="text-muted">are you sure?</span>
-            <button
-              onClick={async () => {
-                const supabase = createClient();
-                await supabase.from("items").delete().eq("id", item.id);
-                router.push(`/hunt/${huntId}`);
-              }}
-              className="text-red-400 hover:text-red-300 transition-colors"
-            >
-              yes, delete
-            </button>
-            <button
-              onClick={() => setDeleting(false)}
-              className="text-muted hover:text-cream transition-colors"
-            >
-              cancel
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={() => setDeleting(true)}
-            className="text-muted hover:text-stone transition-colors"
-          >
-            delete item
-          </button>
-        )}
-      </div>
     </div>
   );
 }

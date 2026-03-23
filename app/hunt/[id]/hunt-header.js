@@ -47,8 +47,8 @@ function EditableText({
         onKeyDown={handleKeyDown}
         autoFocus
         placeholder={placeholder}
-        className={`bg-surface text-cream px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-stone ${inputClassName}`}
-        style={{ fontSize: '24px', fontWeight: 500 }}
+        className={`bg-surface text-cream px-2 py-1 rounded focus:outline-none ${inputClassName}`}
+        style={{ fontSize: '24px', fontWeight: 500, boxShadow: '0 0 0 0.5px rgba(255,255,255,0.08)' }}
       />
     );
   }
@@ -115,7 +115,8 @@ function EditableVibe({ value, onSave, placeholder }) {
         autoFocus
         placeholder={placeholder}
         rows={3}
-        className="w-full bg-surface text-cream px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-stone resize-none mt-1"
+        className="w-full bg-surface text-cream px-2 py-1 rounded focus:outline-none resize-none mt-1"
+        style={{ boxShadow: '0 0 0 0.5px rgba(255,255,255,0.08)' }}
       />
     );
   }
