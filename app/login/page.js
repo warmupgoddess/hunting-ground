@@ -53,14 +53,14 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <h1 className="brand-title text-4xl mb-2">hunting groundz₹</h1>
-        <p className="text-stone text-sm mb-10">sign in to continue</p>
+        <p className="text-stone mb-10">sign in to continue</p>
 
         {sent ? (
           <div>
-            <p className="text-cream text-sm">
+            <p className="text-cream">
               check your email for a magic link.
             </p>
-            <p className="text-muted text-xs mt-2">sent to {email}</p>
+            <p className="text-muted mt-2">sent to {email}</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -70,7 +70,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your email"
               required
-              className="bg-surface text-cream placeholder:text-muted px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-stone"
+              className="bg-surface text-cream placeholder:text-muted px-4 py-3 rounded-lg focus:outline-none focus:ring-1 focus:ring-stone"
             />
             {mode === "password" && (
               <input
@@ -79,14 +79,14 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="password"
                 required
-                className="bg-surface text-cream placeholder:text-muted px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-stone"
+                className="bg-surface text-cream placeholder:text-muted px-4 py-3 rounded-lg focus:outline-none focus:ring-1 focus:ring-stone"
               />
             )}
-            {error && <p className="text-red-400 text-xs">{error}</p>}
+            {error && <p className="text-red-400">{error}</p>}
             <button
               type="submit"
               disabled={loading}
-              className="bg-cream text-bg px-4 py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="bg-cream text-bg px-4 py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               {loading
                 ? "signing in..."
@@ -97,7 +97,7 @@ export default function Login() {
             <button
               type="button"
               onClick={() => setMode(mode === "magic" ? "password" : "magic")}
-              className="text-muted text-xs hover:text-stone transition-colors"
+              className="text-muted hover:text-stone transition-colors"
             >
               {mode === "magic"
                 ? "use password instead"

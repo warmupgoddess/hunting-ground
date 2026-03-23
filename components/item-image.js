@@ -12,9 +12,16 @@ function isSupabaseUrl(src) {
   }
 }
 
-export default function ItemImage({ src, alt, width, height, className }) {
+export default function ItemImage({ src, alt, width, height, className, fill }) {
   if (isSupabaseUrl(src)) {
-    return (
+    return fill ? (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className={className}
+      />
+    ) : (
       <Image
         src={src}
         alt={alt}

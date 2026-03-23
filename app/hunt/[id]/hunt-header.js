@@ -48,6 +48,7 @@ function EditableText({
         autoFocus
         placeholder={placeholder}
         className={`bg-surface text-cream px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-stone ${inputClassName}`}
+        style={{ fontSize: '24px', fontWeight: 500 }}
       />
     );
   }
@@ -114,7 +115,7 @@ function EditableVibe({ value, onSave, placeholder }) {
         autoFocus
         placeholder={placeholder}
         rows={3}
-        className="w-full bg-surface text-cream px-2 py-1 rounded text-sm focus:outline-none focus:ring-1 focus:ring-stone resize-none mt-1"
+        className="w-full bg-surface text-cream px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-stone resize-none mt-1"
       />
     );
   }
@@ -127,13 +128,13 @@ function EditableVibe({ value, onSave, placeholder }) {
     >
       {display ? (
         <div
-          className="text-stone text-sm"
+          className="text-stone"
           style={{ whiteSpace: "pre-line" }}
         >
           {display}
         </div>
       ) : (
-        <p className="text-muted text-sm">
+        <p className="text-muted">
           {placeholder}
         </p>
       )}
@@ -145,6 +146,14 @@ export default function HuntHeader({ hunt }) {
   const router = useRouter();
   const [name, setName] = useState(hunt.name);
   const [vibe, setVibe] = useState(hunt.vibe || "");
+
+  useEffect(() => {
+    function onVibeUpdated(e) {
+      setVibe(e.detail.vibe);
+    }
+    window.addEventListener("vibe-updated", onVibeUpdated);
+    return () => window.removeEventListener("vibe-updated", onVibeUpdated);
+  }, []);
 
   async function saveField(field, value) {
     const supabase = createClient();
@@ -163,9 +172,9 @@ export default function HuntHeader({ hunt }) {
           setName(v);
           return saveField("name", v);
         }}
-        displayValue={<h1 className="text-2xl">{name}</h1>}
+        displayValue={<h1 style={{ fontSize: '24px', fontWeight: 500 }}>{name}</h1>}
         placeholder="hunt name"
-        inputClassName="text-2xl w-full"
+        inputClassName="w-full"
       />
       <EditableVibe
         value={vibe}

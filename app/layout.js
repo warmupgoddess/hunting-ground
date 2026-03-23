@@ -1,11 +1,4 @@
-import { DM_Mono } from "next/font/google";
 import "./globals.css";
-
-const dmMono = DM_Mono({
-  variable: "--font-dm-mono",
-  subsets: ["latin"],
-  weight: ["400"],
-});
 
 export const metadata = {
   title: "hunting groundz₹",
@@ -16,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${dmMono.variable} antialiased`}>{children}</body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

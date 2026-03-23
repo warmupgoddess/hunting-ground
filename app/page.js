@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import ItemImage from "@/components/item-image";
+import ChatBar from "@/components/chat-bar";
 
 function formatDate(dateString) {
   const d = new Date(dateString);
@@ -31,7 +32,7 @@ export default async function Home() {
   const remaining = rest.length - LIST_LIMIT;
 
   return (
-    <div className="min-h-screen px-6 pt-8 pb-12 max-w-2xl mx-auto">
+    <div className="min-h-screen px-6 pt-8 pb-24 max-w-2xl mx-auto">
       <div style={{ paddingBottom: '4rem' }}>
         <h1
           className="text-center"
@@ -55,20 +56,20 @@ export default async function Home() {
 
       {!hunts?.length ? (
         <div className="mt-20">
-          <p className="text-stone text-sm">nothing here yet.</p>
+          <p className="text-stone">nothing here yet.</p>
         </div>
       ) : (
         <div>
           {featured && (
             <Link href={`/hunt/${featured.id}`} className="block" style={{ marginBottom: '5rem' }}>
               <div className="flex items-baseline justify-between gap-4">
-                <h2 className="text-xl font-bold">{featured.name}</h2>
-                <span className="text-muted text-[11px] whitespace-nowrap">
+                <h2 style={{ fontSize: '24px', fontWeight: 500 }}>{featured.name}</h2>
+                <span className="text-muted whitespace-nowrap">
                   {formatDate(featured.updated_at)}
                 </span>
               </div>
               {featured.vibe && (
-                <p className="text-stone text-sm mt-2 line-clamp-2">
+                <p className="text-stone mt-2 line-clamp-2">
                   {featured.vibe}
                 </p>
               )}
@@ -94,7 +95,7 @@ export default async function Home() {
                 </div>
               )}
 
-              <div className="flex gap-3 mt-3 text-sm text-muted">
+              <div className="flex gap-3 mt-3 text-muted" style={{ fontSize: '18px', fontWeight: 200 }}>
                 <span>{featured.items?.length || 0} items</span>
                 <span>
                   {featured.items?.filter((i) => i.is_favorite).length || 0}{" "}
@@ -114,21 +115,21 @@ export default async function Home() {
                   className="flex items-center justify-between py-2 group"
                 >
                   <div className="flex items-baseline gap-3">
-                    <span className="text-base tracking-widest lowercase group-hover:text-cream transition-colors">
+                    <span className="lowercase group-hover:text-cream transition-colors" style={{ fontSize: '18px', fontWeight: 200, letterSpacing: '0.15em' }}>
                       {hunt.name}
                     </span>
-                    <span className="text-xs text-muted">
+                    <span className="text-muted">
                       {hunt.items?.length || 0}
                     </span>
                   </div>
-                  <span className="text-muted text-base group-hover:text-stone transition-colors">
+                  <span className="text-muted group-hover:text-stone transition-colors" style={{ fontSize: '18px', fontWeight: 200 }}>
                     &rarr;
                   </span>
                 </Link>
               ))}
 
               {remaining > 0 && (
-                <p className="text-muted text-xs mt-3">
+                <p className="text-muted mt-3">
                   show all active hunts ({rest.length})
                 </p>
               )}
@@ -137,14 +138,7 @@ export default async function Home() {
         </div>
       )}
 
-      <div className="flex justify-center mt-12">
-        <Link
-          href="/new"
-          className="w-11 h-11 rounded-full border border-border flex items-center justify-center text-muted hover:text-cream hover:border-stone transition-colors text-lg"
-        >
-          +
-        </Link>
-      </div>
+      <ChatBar context="home" />
     </div>
   );
 }

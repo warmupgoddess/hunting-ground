@@ -9,13 +9,14 @@
   --color-surface-hover: #222120;
   --color-border: #2a2926;
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
-  --font-mono: var(--font-dm-mono);
-  --font-serif: "New York", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 }
 
 body {
   background: #111110;
   color: #e8e4de;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
 }
 
 .no-scrollbar::-webkit-scrollbar {

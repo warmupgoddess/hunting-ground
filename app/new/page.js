@@ -38,16 +38,16 @@ export default function NewHunt() {
     <div className="min-h-screen px-6 py-12 max-w-2xl mx-auto">
       <button
         onClick={() => router.back()}
-        className="text-muted text-sm mb-10 hover:text-stone transition-colors"
+        className="text-muted mb-10 hover:text-stone transition-colors"
       >
         &larr; back
       </button>
 
-      <h1 className="text-2xl font-bold mb-8">new hunt</h1>
+      <h1 className="mb-8" style={{ fontSize: '24px', fontWeight: 500 }}>new hunt</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <div>
-          <label className="text-xs text-muted font-mono block mb-2">
+          <label className="text-muted block mb-2">
             name
           </label>
           <input
@@ -56,12 +56,12 @@ export default function NewHunt() {
             onChange={(e) => setName(e.target.value)}
             placeholder="what are you looking for?"
             required
-            className="w-full bg-surface text-cream placeholder:text-muted px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-stone"
+            className="w-full bg-surface text-cream placeholder:text-muted px-4 py-3 rounded-lg focus:outline-none focus:ring-1 focus:ring-stone"
           />
         </div>
 
         <div>
-          <label className="text-xs text-muted font-mono block mb-2">
+          <label className="text-muted block mb-2">
             vibe
           </label>
           <textarea
@@ -69,14 +69,14 @@ export default function NewHunt() {
             onChange={(e) => setVibe(e.target.value)}
             placeholder="describe the feeling, the aesthetic..."
             rows={3}
-            className="w-full bg-surface text-cream placeholder:text-muted px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-stone resize-none"
+            className="w-full bg-surface text-cream placeholder:text-muted px-4 py-3 rounded-lg focus:outline-none focus:ring-1 focus:ring-stone resize-none"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading || !name}
-          className="bg-cream text-bg px-4 py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50 mt-2"
+          className="bg-cream text-bg px-4 py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 mt-2"
         >
           {loading ? "creating..." : "start hunting"}
         </button>
