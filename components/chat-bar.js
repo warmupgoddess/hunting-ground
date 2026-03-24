@@ -58,7 +58,7 @@ export default function ChatBar({
         : "what's next?",
     item: confirmingDelete
       ? "delete this item? type yes to confirm"
-      : "anything 2 add?",
+      : "anything 2 add, mrin?",
   };
 
   async function getUser() {
