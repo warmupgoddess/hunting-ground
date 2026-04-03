@@ -4,6 +4,7 @@ import Link from "next/link";
 import ItemImage from "@/components/item-image";
 import HuntHeader from "./hunt-header";
 import ChatBar from "@/components/chat-bar";
+import HuntOnboarding from "@/components/hunt-onboarding";
 import ItemCardImage from "./item-card-image";
 
 export default async function HuntDetail({ params }) {
@@ -88,8 +89,8 @@ export default async function HuntDetail({ params }) {
         </>
       )}
 
-      {activeItems.length === 0 && (
-        <p className="text-muted mt-8">no items yet.</p>
+      {activeItems.length === 0 && soldOutItems.length === 0 && (
+        <HuntOnboarding huntId={id} />
       )}
 
       {soldOutItems.length > 0 && (
@@ -126,7 +127,7 @@ export default async function HuntDetail({ params }) {
         </div>
       )}
 
-      <ChatBar context="hunt" huntId={id} isEmpty={!items?.length} />
+      {items?.length > 0 && <ChatBar context="hunt" huntId={id} isEmpty={false} />}
     </div>
   );
 }

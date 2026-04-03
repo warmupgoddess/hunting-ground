@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import ChatBar from "./chat-bar";
 
-export default function Onboarding() {
+export default function HuntOnboarding({ huntId }) {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
@@ -19,13 +19,13 @@ export default function Onboarding() {
           className="text-muted text-center transition-opacity duration-[800ms]"
           style={{ fontSize: "18px", fontWeight: 200, opacity: step >= 0 ? 1 : 0 }}
         >
-          these are your hunting groundz.
+          this is where your hunts live.
         </p>
         <p
           className="text-muted text-center mt-4 transition-opacity duration-[800ms]"
           style={{ fontSize: "18px", fontWeight: 200, opacity: step >= 1 ? 1 : 0 }}
         >
-          describe the vibes of something you&apos;ve been wanting.
+          add an item to consider by pasting a link below.
         </p>
       </div>
 
@@ -36,7 +36,7 @@ export default function Onboarding() {
           pointerEvents: step >= 2 ? "auto" : "none",
         }}
       >
-        <ChatBar context="home" />
+        <ChatBar context="hunt" huntId={huntId} isEmpty />
       </div>
     </>
   );
